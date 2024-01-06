@@ -22,7 +22,7 @@ export async function outLogin(options?: { [key: string]: any }) {
 
 /** 登录接口 POST /api/login/account */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/v1/user/login', {
+  return request<API.LoginResult>('http://43.138.31.87:1001/api/v1/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
