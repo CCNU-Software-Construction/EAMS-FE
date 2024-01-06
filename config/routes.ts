@@ -48,7 +48,7 @@ export default [
   {
     path: '/course',
     name: 'course',
-    icon: 'crown',
+    icon: 'book',
     // access: 'canAdmin',
     routes: [
       {
@@ -58,7 +58,38 @@ export default [
       {
         path: '/course/CourseInformation',
         name: 'CourseInformation',
+        icon: 'Profile',
         component: './course/CourseInformation',
+      },
+      {
+        path: '/course/EditCourseInformation',
+        name: 'EditCourseInformation',
+        icon: 'Edit',
+        component: './course/EditCourseInformation',
+      },
+    ],
+  },
+  {
+    path: '/score',
+    name: 'score',
+    icon: 'book',
+    // access: 'canAdmin',
+    routes: [
+      {
+        path: '/score',
+        redirect: '/score/edit',
+      },
+      {
+        path: '/score/StudentScore',
+        name: 'StudentScore',
+        icon: 'Profile',
+        component: './score/StudentScore',
+      },
+      {
+        path: '/score/TeacherScore',
+        name: 'TeacherScore',
+        icon: 'Profile',
+        component: './score/TeacherScore',
       },
     ],
   },

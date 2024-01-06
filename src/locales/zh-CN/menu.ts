@@ -1,4 +1,10 @@
 export default {
+  'menu.course': '课程',
+  'menu.course.CourseInformation': '课程信息',
+  'menu.course.EditCourseInformation': '编辑课程信息',
+  'menu.score': '成绩',
+  'menu.score.StudentScore': '查看成绩',
+  'menu.score.TeacherScore': '查看学生成绩',
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',

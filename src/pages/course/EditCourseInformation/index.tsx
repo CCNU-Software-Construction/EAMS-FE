@@ -1,17 +1,18 @@
 import {FolderOutlined} from '@ant-design/icons';
-import {PageContainer, ProCard} from '@ant-design/pro-components';
-import type {MenuProps} from 'antd';
+import {ModalForm, PageContainer, ProCard, ProFormText, ProFormUploadButton} from '@ant-design/pro-components';
+import {Button, MenuProps, message, Modal} from 'antd';
 import {Menu} from 'antd';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-import CourseNode from '@/pages/course/CourseInformation/Components/CourseNode';
-import React, {useCallback} from 'react';
+import CourseNode, {CourseData} from '@/pages/course/EditCourseInformation/Components/CourseNode';
+import React, {useCallback, useState} from 'react';
 import {
   addEdge,
   Background,
   Controls,
   MiniMap,
+  NodeProps,
   NodeResizer,
   NodeToolbar,
   Panel,
@@ -149,20 +150,20 @@ const initialNodes = [
       ],
     },
   },
-  {
-    id: '6',
-    type: 'courseNode',
-    position: {x: 700, y: 400},
-    data: {
-      text: '第六章 文件管理',
-      node: {left: 'target', right: ''},
-      links: [{
-        type: 'pdf',
-        link: 'https://vip.ow365.cn/?i=29353&ssl=1&furl=https://oss.ai-augmented.com/oss-ccnu/jx/5893631503958605119/6329450395370313692?OSSAccessKeyId=LTAIOOB8tIOg2Q4O&Expires=1702472992862&Signature=Yv8cbCG%2FRvK3tDMepONBn4E8%2Fz8%3D&response-content-disposition=filename=%226329450395370313692_6329450395370313692.pdf%22;filename*=utf-8%27%276329450395370313692_6329450395370313692.pdf&response-content-type=application/pdf',
-        text: '6_文件管理.pdf'
-      }],
-    },
-  },
+  // {
+  //   id: '6',
+  //   type: 'courseNode',
+  //   position: {x: 700, y: 400},
+  //   data: {
+  //     text: '第六章 文件管理',
+  //     node: {left: 'target', right: ''},
+  //     links: [{
+  //       type: 'pdf',
+  //       link: 'https://vip.ow365.cn/?i=29353&ssl=1&furl=https://oss.ai-augmented.com/oss-ccnu/jx/5893631503958605119/6329450395370313692?OSSAccessKeyId=LTAIOOB8tIOg2Q4O&Expires=1702472992862&Signature=Yv8cbCG%2FRvK3tDMepONBn4E8%2Fz8%3D&response-content-disposition=filename=%226329450395370313692_6329450395370313692.pdf%22;filename*=utf-8%27%276329450395370313692_6329450395370313692.pdf&response-content-type=application/pdf',
+  //       text: '6_文件管理.pdf'
+  //     }],
+  //   },
+  // },
 ];
 // type CourseNode = {
 //   id: string;
@@ -187,7 +188,7 @@ const initialEdges = [
   {id: 'e0-3', source: '0', target: '3', sourceHandle: 'left', targetHandle: 'right'},
   {id: 'e0-4', source: '0', target: '4', sourceHandle: 'right', targetHandle: 'left'},
   {id: 'e0-5', source: '0', target: '5', sourceHandle: 'right', targetHandle: 'left'},
-  {id: 'e0-6', source: '0', target: '6', sourceHandle: 'right', targetHandle: 'left'},
+  // {id: 'e0-6', source: '0', target: '6', sourceHandle: 'right', targetHandle: 'left'},
 ];
 // type Edge = {
 //   id: string;
@@ -196,11 +197,18 @@ const initialEdges = [
 //   sourceHandle: 'left' | 'right';
 //   targetHandle: 'left' | 'right';
 // };
+
 const nodeTypes = {
   courseNode: CourseNode,
 };
 
 const CourseInformation = () => {
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+
+
   function getItem(
     label: React.ReactNode,
     key: React.Key,
@@ -226,11 +234,6 @@ const CourseInformation = () => {
     getItem('第六章 文件管理', '6', <FolderOutlined/>),
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   return (
     <PageContainer
@@ -241,16 +244,70 @@ const CourseInformation = () => {
     >
       <ProCard direction="column" ghost gutter={[0, 16]}>
         <ProCard gutter={16} ghost style={{height: '65vh'}}>
-          <ProCard colSpan={5} style={{height: '65vh'}}>
-            <Menu
-              // defaultSelectedKeys={['1']}
-              // defaultOpenKeys={['sub1']}
-              mode="inline"
-              // inlineCollapsed={collapsed}
-              items={items}
-            />
+          <ProCard colSpan={3} style={{height: '65vh'}}>
+            <ModalForm<{
+              name: string;
+              company: string;
+            }>
+              title="新建节点"
+              trigger={
+                <Button type="primary">
+                  新建节点
+                </Button>
+              }
+              // form={form}
+              autoFocusFirstInput
+              modalProps={{
+                destroyOnClose: true,
+                onCancel: () => console.log('run'),
+              }}
+              submitTimeout={2000}
+              onFinish={async (values) => {
+                await new Promise((resolve) => {
+                  setTimeout(() => {
+                    setNodes((node) => [...node,
+                      {
+                        id: '6',
+                        type: 'courseNode',
+                        position: {x: 900, y: 400},
+                        data: {
+                          text: '第六章 文件管理',
+                          node: {left: 'target', right: ''},
+                          links: [{
+                            type: 'pdf',
+                            link: 'https://vip.ow365.cn/?i=29353&ssl=1&furl=https://oss.ai-augmented.com/oss-ccnu/jx/5893631503958605119/6329450395370313692?OSSAccessKeyId=LTAIOOB8tIOg2Q4O&Expires=1702472992862&Signature=Yv8cbCG%2FRvK3tDMepONBn4E8%2Fz8%3D&response-content-disposition=filename=%226329450395370313692_6329450395370313692.pdf%22;filename*=utf-8%27%276329450395370313692_6329450395370313692.pdf&response-content-type=application/pdf',
+                            text: '6_文件管理.pdf'
+                          }],
+                        },
+                      },
+                    ])
+                    resolve(true);
+                  }, 500);
+                });
+                console.log(values.name);
+                message.success('提交成功');
+                return true;
+              }}
+            >
+              <ProFormText
+                width="md"
+                name="name"
+                label="节点名称"
+                // tooltip="最长为 24 位"
+                placeholder="请输入名称"
+              />
+              <ProFormUploadButton
+                name="上传文件"
+                label="Upload"
+                max={9}
+                fieldProps={{
+                  name: 'file',
+                }}
+                // action="/upload.do"
+              />
+            </ModalForm>
           </ProCard>
-          <ProCard colSpan={19} style={{width: '100%', height: '65vh'}}>
+          <ProCard colSpan={21} style={{width: '100%', height: '65vh'}}>
             <div style={{width: '100%', height: '100%'}}>
               <ReactFlow
                 nodes={nodes}
