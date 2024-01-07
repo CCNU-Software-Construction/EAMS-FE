@@ -66,16 +66,16 @@ const Search: FC<SearchProps> = (props) => {
     <PageContainer
       content={
         <div style={{ textAlign: 'center' }}>
-          <Input.Search
+          {/* <Input.Search
             placeholder="请输入"
             enterButton="搜索"
             size="large"
             onSearch={handleFormSubmit}
             style={{ maxWidth: 522, width: '100%' }}
-          />
+          /> */}
         </div>
       }
-      tabList={tabList}
+      // tabList={tabList}
       tabActiveKey={getTabKey()}
       onTabChange={handleTabChange}
     >

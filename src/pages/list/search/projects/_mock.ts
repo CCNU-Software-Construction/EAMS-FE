@@ -2,14 +2,14 @@ import type { Request, Response } from 'express';
 import type { ListItemDataType } from './data.d';
 
 const titles = [
-  'Alipay',
-  'Angular',
-  'Ant Design',
-  'Ant Design Pro',
-  'Bootstrap',
-  'React',
-  'Vue',
-  'Webpack',
+  '操作系统原理',
+  '数据结构与算法',
+  '面向对象程序设计',
+  '算法设计与分析',
+  '软件构造',
+  '编译原理',
+  '数据库原理',
+  'Java程序设计',
 ];
 const avatars = [
   'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png', // Alipay
@@ -29,11 +29,14 @@ const covers = [
   'https://gw.alipayobjects.com/zos/rmsportal/gLaIAoVWTtLbBWZNYEMg.png',
 ];
 const desc = [
-  '那是一种内在的东西， 他们到达不了，也无法触及的',
-  '希望是一个好东西，也许是最好的，好东西是不会消亡的',
-  '生命就像一盒巧克力，结果往往出人意料',
-  '城镇中有那么多的酒馆，她却偏偏走进了我的酒馆',
-  '那时候我只会想自己想要什么，从不想自己拥有什么',
+  '管理计算机硬件和软件资源，实现任务调度、内存管理和文件系统等功能。',
+  '学习常用数据结构和算法，提高问题解决能力和程序效率。',
+  '利用对象和类进行程序设计，提高代码的可维护性和复用性。',
+  '学习高效算法的设计与分析，解决实际问题的计算复杂度。',
+  '掌握软件构建的基本原理和方法，培养团队合作和项目管理能力。',
+  '理解编译器的基本原理和工作流程，提高程序的性能和效率。',
+  '学习数据库的设计与管理，实现高效的数据存储和检索。',
+  '学习Java语言的基础知识和编程技巧，开发实际应用程序。',
 ];
 const user = [
   '付小小',
@@ -75,6 +78,7 @@ function fakeList(count: number): ListItemDataType[] {
       star: Math.ceil(Math.random() * 100) + 100,
       like: Math.ceil(Math.random() * 100) + 100,
       message: Math.ceil(Math.random() * 10) + 10,
+      count: Math.floor(40 + Math.random() * 20),
       content:
         '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
       members: [

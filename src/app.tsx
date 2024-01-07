@@ -55,9 +55,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
-    waterMarkProps: {
-      content: initialState?.currentUser?.name,
-    },
+    // waterMarkProps: {
+    //   content: initialState?.currentUser?.name,
+    // },
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
@@ -68,14 +68,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     },
     links: isDev
       ? [
-        // <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-        //   <LinkOutlined />
-        //   <span>OpenAPI 文档</span>
-        // </Link>,
-        // <Link to="/~docs" key="docs">
-        //   <BookOutlined />
-        //   <span>业务组件文档</span>
-        // </Link>,
+          // <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+          //   <LinkOutlined />
+          //   <span>OpenAPI 文档</span>
+          // </Link>,
+          // <Link to="/~docs" key="docs">
+          //   <BookOutlined />
+          //   <span>业务组件文档</span>
+          // </Link>,
         ]
       : [],
     menuHeaderRender: undefined,
